@@ -1,0 +1,173 @@
+from typing import Dict
+
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+
+from AppBlog.models import Curso, Estudiante
+from AppBlog.forms import CursoFormulario, UserRegisterForm, UserUpdateForm, AvatarFormulario
+
+
+@login_required
+def inicio(request):
+
+    return render(request, "AppBlog/inicio.html")
+
+
+@login_required
+def entregables(request):
+
+    return render(request, "AppBlog/entregables.html")
+
+
+# Vistas de Cursos
+
+@login_required
+def cursos(request):
+    cursos = Curso.objects.all()
+    return render(request, "AppBlog/cursos.html", {'cursos': cursos})
+
+
+@login_required
+def crear_curso(request):
+    if request.method == 'POST':
+        formulario = CursoFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            curso = Curso(nombre=data['nombre'], comision=data['comision'])
+            curso.save()
+            return render(request, "AppBlog/inicio.html", {"exitoso": True})
+    else:  # GET
+        formulario = CursoFormulario()  # Formulario vacio para construir el html
+    return render(request, "AppBlog/form_curso.html", {"formulario": formulario})
+
+
+@login_required
+def busqueda_cursos(request):
+    return render(request, "AppBlog/form_busqueda_curso.html")
+
+
+@login_required
+def buscar_curso(request):
+    if request.GET["comision"]:
+        comision = request.GET["comision"]
+        cursos = Curso.objects.filter(comision__icontains=comision)
+        return render(request, "AppBlog/cursos.html", {'cursos': cursos})
+    else:
+        return render(request, "AppBlog/cursos.html", {'cursos': []})
+
+# Vistas de Estudiantes
+
+class EstudianteListView(LoginRequiredMixin, ListView):
+    model = Estudiante
+    template_name = 'AppBlog/estudiantes.html'
+
+
+class EstudianteCreateView(LoginRequiredMixin, CreateView):
+    model = Estudiante
+    fields = ['nombre', 'apellido']
+    success_url = reverse_lazy('estudiantes')
+
+
+class EstudianteUpdateView(LoginRequiredMixin, UpdateView):
+    model = Estudiante
+    fields = ['nombre', 'apellido']
+    success_url = reverse_lazy('estudiantes')
+
+
+class EstudianteDeleteView(LoginRequiredMixin, DeleteView):
+    model = Estudiante
+    success_url = reverse_lazy('estudiantes')
+
+
+# Views de ususarios, registro, login o logout
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    success_url = reverse_lazy('inicio')
+    template_name = 'AppBlog/form_perfil.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+@login_required
+def agregar_avatar(request):
+    if request.method == 'POST':
+
+        form = AvatarFormulario(request.POST, request.FILES) #aquí me llega toda la información del html
+
+        if form.is_valid:   #Si pasó la validación de Django
+            avatar = form.save()
+            avatar.user = request.user
+            avatar.save()
+            return redirect(reverse('inicio'))
+
+    form = AvatarFormulario() #Formulario vacio para construir el html
+    return render(request, "AppBlog/form_avatar.html", {"form":form})
+
+
+def register(request):
+    mensaje = ''
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return render(request, "AppBlog/inicio.html", {"mensaje": "Usuario Creado :)"})
+        else:
+            mensaje = 'Cometiste un error en el registro'
+    formulario = UserRegisterForm()  # Formulario vacio para construir el html
+    context = {
+        'form': formulario,
+        'mensaje': mensaje
+    }
+
+    return render(request, "AppBlog/registro.html", context=context)
+
+
+def login_request(request):
+    next_url = request.GET.get('next')
+    if request.method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get('username')
+            contra = form.cleaned_data.get('password')
+            user = authenticate(username=usuario, password=contra)
+            if user:
+                login(request=request, user=user)
+                if next_url:
+                    return redirect(next_url)
+                return render(request, "AppBlog/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+            else:
+                return render(request,"AppBlog/inicio.html", {"mensaje":"Error, datos incorrectos"})
+        else:
+            return render(request,"AppBlog/inicio.html", {"mensaje":"Error, formulario erroneo"})
+
+    form = AuthenticationForm()
+    return render(request,"AppBlog/login.html", {'form':form} )
+
+
+class CustomLogoutView(LogoutView):
+    template_name = 'AppBlog/logout.html'
+    next_page = reverse_lazy('inicio')
+
+
+# Formulario a mano
+# def crear_curso(request):
+#       if request.method == 'POST':
+#             data_formulario: Dict = request.POST
+#             curso = Curso(nombre=data_formulario['nombre'], comision=data_formulario['comision'])
+#             curso.save()
+#             return render(request, "AppBlog/inicio.html")
+#       else:  # GET
+#             return render(request, "AppBlog/form_curso.html")
+
