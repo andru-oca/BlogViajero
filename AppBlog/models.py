@@ -2,37 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 """
-Estudiantes (nombre, apellido, email)
-Entregable (nombre, fechaDeEntrega,entregado)
-Curso (nombre, comisión)
+Post (titulo, subtitulo, cuerpo, autor, fecha)
 """
 
-
-class Estudiante(models.Model):
-    nombre = models.CharField(max_length=128)
-    apellido = models.CharField(max_length=128)
-    email = models.EmailField()
-
-    def __str__(self):
-        return f'{self.apellido}, {self.nombre}'
-
-
-class Curso(models.Model):
-    nombre = models.CharField(max_length=128)
-    comision = models.IntegerField()
+class Post(models.Model):
+    titulo = models.CharField(max_length=100)
+    subtitulo = models.CharField(max_length=200)
+    cuerpo = models.CharField(max_length=5000)
+    autor = models.CharField(max_length=60)
+    fecha = models.DateField()
 
     def __str__(self):
-        return f'{self.nombre} - {self.comision}'
-
-
-class Entregable(models.Model):
-    nombre = models.CharField(max_length=128)
-    entregado = models.BooleanField()
-    fecha_de_entrega = models.DateField()
-
-    def __str__(self):
-        return f'Se ve como dice el metodo __str__'
-
+        return f'{self.titulo}, {self.subtitulo}'
 
 class Avatar(models.Model):
     # Vinculo con el usuario

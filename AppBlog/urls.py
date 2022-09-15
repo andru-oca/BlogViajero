@@ -3,18 +3,13 @@ from django.urls import path
 from AppBlog import views
 
 urlpatterns = [
-    path('', views.inicio, name="inicio"),
-    path('entregables/', views.entregables, name="entregables"),
-    # URLs de Cursos
-    path('cursos/', views.cursos, name="cursos"),
-    path('crear-curso/', views.crear_curso, name="crear_curso"),
-    path('busqueda-curso-form/', views.busqueda_cursos, name="busqueda_curso_form"),
-    path('busqueda-curso/', views.buscar_curso, name="busqueda_curso"),
-    # URLs de Estudiantes
-    path('estudiantes/', views.EstudianteListView.as_view(), name="estudiantes"),
-    path('crear-estudiante/', views.EstudianteCreateView.as_view(), name="crear_estudiante"),
-    path('editar-estudiante/<int:pk>/', views.EstudianteUpdateView.as_view(), name="editar_estudiante"),
-    path('eliminar-estudiante/<int:pk>/', views.EstudianteDeleteView.as_view(), name="eliminar_estudiante"),
+    path('', views.home, name="home"),
+    path('about/', views.about, name="about"),
+    # URLs de Posts
+    path('posts/', views.PostListView.as_view(), name="posts"),
+    path('create-post/', views.PostCreateView.as_view(), name="create-post"),
+    path('edit-post/<int:pk>/', views.PostUpdateView.as_view(), name="edit-post"),
+    path('delete-post/<int:pk>/', views.PostDeleteView.as_view(), name="delete-post"),
     # URLS Perfil
     path('editar-perfil/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
     path('agregar-avatar/', views.agregar_avatar, name="agregar_avatar"),

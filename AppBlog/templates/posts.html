@@ -1,4 +1,4 @@
-{% extends "AppBlog/plantilla_base.html" %}
+{% extends "plantilla_base.html" %}
 
 {% block style_block %}
 <style>
@@ -18,8 +18,8 @@
 
 {% block contenido_base %}
 
-<h1>Estudiantes</h1>
-<a href="{% url 'crear_estudiante' %}">Crear Estudiante!</a>
+<h1>Posts</h1>
+<a href="{% url 'create-post' %}">Crear Post!</a>
 
 <br><br>
 
@@ -27,20 +27,20 @@
   <tbody>
     <tr>
       <th>
-        <strong>Apellido</strong>
+        <strong>Titulo</strong>
       </th>
       <th>
-        <strong>Nombre</strong>
+        <strong>Subtitulo</strong>
       </th>
       <th>Editar</th>
       <th>Eliminar</th>
     </tr>
-    {% for estudiante in object_list %}
+    {% for post in object_list %}
     <tr>
-      <td>{{estudiante.apellido}}</td>
-      <td>{{estudiante.nombre}}</td>
-      <td><a href="{% url 'editar_estudiante' estudiante.id %}">Editar</a></td>
-      <td><a href="{% url 'eliminar_estudiante' estudiante.id %}">Eliminar</a></td>
+      <td>{{post.titulo}}</td>
+      <td>{{post.subtitulo}}</td>
+      <td><a href="{% url 'edit-post' post.id %}">Edit</a></td>
+      <td><a href="{% url 'delete-post' post.id %}">Delete</a></td>
     </tr>
     {% endfor %}
   </tbody>

@@ -1,0 +1,11 @@
+{% extends "plantilla_base.html" %}
+
+{% block contenido_base %}
+  <div class="mb-3" style="padding-left:20px;padding-top:20px;padding-bottom:20px;">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Iniciar Sesión" />
+    </form>
+  </div>
+{% endblock contenido_base %}

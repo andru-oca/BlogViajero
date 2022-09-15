@@ -1,7 +1,5 @@
 from django.contrib import admin
-from AppBlog.models import Estudiante, Entregable, Curso, Avatar
+from AppBlog.models import Post, Avatar
 
-admin.site.register(Estudiante)
-admin.site.register(Entregable)
-admin.site.register(Curso)
+admin.site.register(Post)
 admin.site.register(Avatar)

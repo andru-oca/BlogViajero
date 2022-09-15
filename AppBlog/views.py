@@ -10,81 +10,39 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
-from AppBlog.models import Curso, Estudiante
-from AppBlog.forms import CursoFormulario, UserRegisterForm, UserUpdateForm, AvatarFormulario
+from AppBlog.models import Post
+from AppBlog.forms import  UserRegisterForm, UserUpdateForm, AvatarFormulario
 
 
-@login_required
-def inicio(request):
-
-    return render(request, "AppBlog/inicio.html")
+def home(request):
+    return render(request, "home.html")
 
 
-@login_required
-def entregables(request):
+def about(request):
+    return render(request, "about.html")
 
-    return render(request, "AppBlog/entregables.html")
+# Vistas de Posts
 
-
-# Vistas de Cursos
-
-@login_required
-def cursos(request):
-    cursos = Curso.objects.all()
-    return render(request, "AppBlog/cursos.html", {'cursos': cursos})
+class PostListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'posts.html'
 
 
-@login_required
-def crear_curso(request):
-    if request.method == 'POST':
-        formulario = CursoFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            curso = Curso(nombre=data['nombre'], comision=data['comision'])
-            curso.save()
-            return render(request, "AppBlog/inicio.html", {"exitoso": True})
-    else:  # GET
-        formulario = CursoFormulario()  # Formulario vacio para construir el html
-    return render(request, "AppBlog/form_curso.html", {"formulario": formulario})
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['titulo', 'subtitulo']
+    success_url = reverse_lazy('posts')
 
 
-@login_required
-def busqueda_cursos(request):
-    return render(request, "AppBlog/form_busqueda_curso.html")
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['titulo', 'subtitulo']
+    success_url = reverse_lazy('posts')
 
 
-@login_required
-def buscar_curso(request):
-    if request.GET["comision"]:
-        comision = request.GET["comision"]
-        cursos = Curso.objects.filter(comision__icontains=comision)
-        return render(request, "AppBlog/cursos.html", {'cursos': cursos})
-    else:
-        return render(request, "AppBlog/cursos.html", {'cursos': []})
-
-# Vistas de Estudiantes
-
-class EstudianteListView(LoginRequiredMixin, ListView):
-    model = Estudiante
-    template_name = 'AppBlog/estudiantes.html'
-
-
-class EstudianteCreateView(LoginRequiredMixin, CreateView):
-    model = Estudiante
-    fields = ['nombre', 'apellido']
-    success_url = reverse_lazy('estudiantes')
-
-
-class EstudianteUpdateView(LoginRequiredMixin, UpdateView):
-    model = Estudiante
-    fields = ['nombre', 'apellido']
-    success_url = reverse_lazy('estudiantes')
-
-
-class EstudianteDeleteView(LoginRequiredMixin, DeleteView):
-    model = Estudiante
-    success_url = reverse_lazy('estudiantes')
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('posts')
 
 
 # Views de ususarios, registro, login o logout
@@ -92,8 +50,8 @@ class EstudianteDeleteView(LoginRequiredMixin, DeleteView):
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
-    success_url = reverse_lazy('inicio')
-    template_name = 'AppBlog/form_perfil.html'
+    success_url = reverse_lazy('home')
+    template_name = 'form_perfil.html'
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -109,10 +67,10 @@ def agregar_avatar(request):
             avatar = form.save()
             avatar.user = request.user
             avatar.save()
-            return redirect(reverse('inicio'))
+            return redirect(reverse('home'))
 
     form = AvatarFormulario() #Formulario vacio para construir el html
-    return render(request, "AppBlog/form_avatar.html", {"form":form})
+    return render(request, "form_avatar.html", {"form":form})
 
 
 def register(request):
@@ -122,7 +80,7 @@ def register(request):
 
         if form.is_valid():
             form.save()
-            return render(request, "AppBlog/inicio.html", {"mensaje": "Usuario Creado :)"})
+            return render(request, "home.html", {"mensaje": "Usuario Creado :)"})
         else:
             mensaje = 'Cometiste un error en el registro'
     formulario = UserRegisterForm()  # Formulario vacio para construir el html
@@ -131,7 +89,7 @@ def register(request):
         'mensaje': mensaje
     }
 
-    return render(request, "AppBlog/registro.html", context=context)
+    return render(request, "registro.html", context=context)
 
 
 def login_request(request):
@@ -146,28 +104,16 @@ def login_request(request):
                 login(request=request, user=user)
                 if next_url:
                     return redirect(next_url)
-                return render(request, "AppBlog/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+                return render(request, "home.html", {"mensaje":f"Bienvenido {usuario}"})
             else:
-                return render(request,"AppBlog/inicio.html", {"mensaje":"Error, datos incorrectos"})
+                return render(request,"home.html", {"mensaje":"Error, datos incorrectos"})
         else:
-            return render(request,"AppBlog/inicio.html", {"mensaje":"Error, formulario erroneo"})
+            return render(request,"home.html", {"mensaje":"Error, formulario erroneo"})
 
     form = AuthenticationForm()
-    return render(request,"AppBlog/login.html", {'form':form} )
+    return render(request,"login.html", {'form':form} )
 
 
 class CustomLogoutView(LogoutView):
-    template_name = 'AppBlog/logout.html'
-    next_page = reverse_lazy('inicio')
-
-
-# Formulario a mano
-# def crear_curso(request):
-#       if request.method == 'POST':
-#             data_formulario: Dict = request.POST
-#             curso = Curso(nombre=data_formulario['nombre'], comision=data_formulario['comision'])
-#             curso.save()
-#             return render(request, "AppBlog/inicio.html")
-#       else:  # GET
-#             return render(request, "AppBlog/form_curso.html")
-
+    template_name = 'logout.html'
+    next_page = reverse_lazy('home')
