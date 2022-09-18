@@ -22,7 +22,6 @@ def about(request):
     return render(request, "about.html")
 
 # Vistas de Posts
-
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts.html'
@@ -30,9 +29,12 @@ class PostListView(LoginRequiredMixin, ListView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['titulo', 'subtitulo']
+    # form_class: PostForm
+    fields = ['titulo', 'subtitulo', 'cuerpo']
+    template_name = 'post_create.html'
     success_url = reverse_lazy('posts')
 
+#fields = '__all__'
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
@@ -51,7 +53,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy('home')
-    template_name = 'form_perfil.html'
+    template_name = 'perfil_edit.html'
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -70,7 +72,7 @@ def agregar_avatar(request):
             return redirect(reverse('home'))
 
     form = AvatarFormulario() #Formulario vacio para construir el html
-    return render(request, "form_avatar.html", {"form":form})
+    return render(request, "perfil_avatar.html", {"form":form})
 
 
 def register(request):
@@ -82,16 +84,17 @@ def register(request):
             form.save()
             return render(request, "home.html", {"mensaje": "Usuario Creado :)"})
         else:
-            mensaje = 'Cometiste un error en el registro'
+            mensaje = 'ADVERTENCIA: Cometiste un error en el registro !!!'
+
     formulario = UserRegisterForm()  # Formulario vacio para construir el html
     context = {
         'form': formulario,
         'mensaje': mensaje
     }
 
-    return render(request, "registro.html", context=context)
+    return render(request, "perfil_register.html", context=context)
 
-
+# Pass Administrador: BlogViajero2022
 def login_request(request):
     next_url = request.GET.get('next')
     if request.method == "POST":
@@ -108,12 +111,18 @@ def login_request(request):
             else:
                 return render(request,"home.html", {"mensaje":"Error, datos incorrectos"})
         else:
-            return render(request,"home.html", {"mensaje":"Error, formulario erroneo"})
+            mensaje = "Los datos que intenta ingresar son incorrectos"
+            formulario = AuthenticationForm()  # Formulario vacio para construir el html
+            context = {
+                'form': formulario,
+                'mensaje': mensaje
+            }
+            return render(request,"perfil_login.html", context=context)
 
     form = AuthenticationForm()
-    return render(request,"login.html", {'form':form} )
+    return render(request,"perfil_login.html", {'form':form} )
 
 
 class CustomLogoutView(LogoutView):
-    template_name = 'logout.html'
+    template_name = 'perfil_logout.html'
     next_page = reverse_lazy('home')

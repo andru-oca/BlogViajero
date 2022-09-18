@@ -2,7 +2,7 @@
 
 {% block style_block %}
 <style>
-  table.coder-table {
+  table.blog-table {
     border:3px solid;
   }
   th,
@@ -23,14 +23,17 @@
 
 <br><br>
 
-<table class="coder-table">
+<table class="blog-table">
   <tbody>
     <tr>
       <th>
         <strong>Titulo</strong>
       </th>
       <th>
-        <strong>Subtitulo</strong>
+        <strong>Autor</strong>
+      </th>
+      <th>
+        <strong>Fecha</strong>
       </th>
       <th>Editar</th>
       <th>Eliminar</th>
@@ -38,7 +41,8 @@
     {% for post in object_list %}
     <tr>
       <td>{{post.titulo}}</td>
-      <td>{{post.subtitulo}}</td>
+      <td>{{post.autor}}</td>
+      <td>{{post.fecha}}</td>
       <td><a href="{% url 'edit-post' post.id %}">Edit</a></td>
       <td><a href="{% url 'delete-post' post.id %}">Delete</a></td>
     </tr>

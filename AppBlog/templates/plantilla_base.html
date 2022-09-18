@@ -7,7 +7,7 @@
           content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Pagina principal</title>
+    <title>Blog Viajero</title>
     <!-- Favicon-->
     <link rel="icon"
           type="image/x-icon"
@@ -70,6 +70,9 @@
               <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{% url 'posts' %}">Post Management</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="{% url 'about' %}">About</a>
             </li>
           </ul>
@@ -85,20 +88,27 @@
     </nav>
 
     <section> 
-    {% if mensaje %}
-      <span style="background-color: blue;">{{ mensaje }}</span>
-    {% endif %}
     
     {% block contenido_base %}
     {% endblock contenido_base %}
+
+    {% if mensaje %}
+      <div style="display: flex; justify-content: center;">
+        <div class="alert alert-warning" role="alert" style="border-radius: 20px;width: fit-content;color:#FF0000;">
+          <strong>{{mensaje}}</strong>
+        </div>
+      </div>
+    {% comment %} <span style="background-color: blue;">{{ mensaje }}</span> {% endcomment %}
+    {% endif %}
+
     </section> 
 
     <div class="container">
       <!-- Footer-->
       <footer class="bg-light text-center text-lg-start fixed-bottom">
-        <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-center p-1" style="background-color: #bbd5f9;">
           © 2022 Copyright:
-          <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+          <a class="text-dark" href="{% url 'home' %}">BlogViajero.com</a>
         </div>
       </footer>
     </div>
