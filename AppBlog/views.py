@@ -2,20 +2,25 @@ from typing import Dict
 
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from datetime import date
 
 from AppBlog.models import Post
-from AppBlog.forms import  UserRegisterForm, UserUpdateForm, AvatarFormulario
+from AppBlog.forms import  UserRegisterForm, UserUpdateForm, AvatarFormulario, PostForm
 
+class BlogListView(ListView):
+    model = Post
+    template_name = 'home.html'
 
-def home(request):
-    return render(request, "home.html")
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'post_detail.html'
 
 
 def about(request):
@@ -29,21 +34,28 @@ class PostListView(LoginRequiredMixin, ListView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    # form_class: PostForm
-    fields = ['titulo', 'subtitulo', 'cuerpo']
+    form_class = PostForm
     template_name = 'post_create.html'
     success_url = reverse_lazy('posts')
+
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.date = date.today()
+        return super(PostCreateView, self).form_valid(form)
 
 #fields = '__all__'
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['titulo', 'subtitulo']
+    form_class = PostForm
+    template_name = 'post_create.html'
     success_url = reverse_lazy('posts')
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
+    template_name = 'post_delete.html'
     success_url = reverse_lazy('posts')
 
 

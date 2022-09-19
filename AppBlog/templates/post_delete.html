@@ -1,11 +1,15 @@
 {% extends "plantilla_base.html" %}
 
 {% block contenido_base %}
-<span>Vas a eliminar a {{object}}</span>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Confirmar" />
-</form>
+
+<div style="text-align:center;margin-top: 10%;">
+  <form method="post">
+    {% csrf_token %}
+    <h3>¿Are you sure that you want to delete the following post: {{post.title}}?</h3>
+    <br>
+    <button class="btn btn-danger" type="submit">Yes, I'm sure about it!</button> 
+    <a class="btn btn-default" href="{% url 'posts' %}">Cancel</a>
+  </form>
+</div>
 {% endblock contenido_base %}

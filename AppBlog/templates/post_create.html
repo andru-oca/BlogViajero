@@ -1,9 +1,17 @@
 {% extends "plantilla_base.html" %}
 
 {% block contenido_base %}
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Enviar" />
-</form>
+
+<div style='display: flex; justify-content: center'>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary btn-sm" style="align-self:flex-end;">
+      Post it!
+    </button>
+  </form>
+  
+</div>
+
+
 {% endblock contenido_base %}

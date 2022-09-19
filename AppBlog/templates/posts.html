@@ -4,6 +4,9 @@
 <style>
   table.blog-table {
     border:3px solid;
+    background-color: #dceafc;
+    margin-left: auto;
+    margin-right: auto;
   }
   th,
   td {
@@ -18,36 +21,54 @@
 
 {% block contenido_base %}
 
-<h1>Posts</h1>
-<a href="{% url 'create-post' %}">Crear Post!</a>
+<div style="text-align:center">
+  <h3 style="background-color:#74a7e4;color:white;text-transform:uppercase;">
+    Posts Management</b>
+  </h3>
 
-<br><br>
+  <a href="{% url 'create-post' %}" class="btn btn-primary btn-sm active " role="button" aria-pressed="true">
+    Create New Post ->
+  </a>
 
-<table class="blog-table">
-  <tbody>
-    <tr>
-      <th>
-        <strong>Titulo</strong>
-      </th>
-      <th>
-        <strong>Autor</strong>
-      </th>
-      <th>
-        <strong>Fecha</strong>
-      </th>
-      <th>Editar</th>
-      <th>Eliminar</th>
-    </tr>
-    {% for post in object_list %}
-    <tr>
-      <td>{{post.titulo}}</td>
-      <td>{{post.autor}}</td>
-      <td>{{post.fecha}}</td>
-      <td><a href="{% url 'edit-post' post.id %}">Edit</a></td>
-      <td><a href="{% url 'delete-post' post.id %}">Delete</a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+  <br>
+  </br>
+
+  <table class="blog-table">
+    <thead>
+      <tr>
+        <td>
+          <strong>Title</strong>
+        </td>
+        <td>
+          <strong>Author</strong>
+        </td>
+        <td>
+          <strong>Date</strong>
+        </td>
+        <td>
+          <strong>Actions</strong>
+        </td>
+      </tr>
+    <tbody>
+      {% if object_list %}
+        {% for post in object_list %}
+          <tr>
+            <td>{{post.title}}</td>
+            <td>{{post.author}}</td>
+            <td>{{post.date}}</td>
+            <td>
+                <a class="btn btn-primary btn-sm" href="{% url 'edit-post' post.id %}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'delete-post' post.id %}">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-warning" role="alert" style='color:#ed5c53'>
+          <h5>There are no posts to show you</h5>
+        </div>
+      {% endif %}  
+    </tbody> 
+  </table> 
+</div>
 
 {% endblock contenido_base %}

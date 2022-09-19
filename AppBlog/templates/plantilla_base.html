@@ -1,4 +1,6 @@
 {% load static %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -103,10 +105,10 @@
 
     </section> 
 
-    <div class="container">
+    <div class="container" style="position: relative">
       <!-- Footer-->
       <footer class="bg-light text-center text-lg-start fixed-bottom">
-        <div class="text-center p-1" style="background-color: #bbd5f9;">
+        <div class="text-center p-0" style="background-color: #bbd5f9;">
           © 2022 Copyright:
           <a class="text-dark" href="{% url 'home' %}">BlogViajero.com</a>
         </div>

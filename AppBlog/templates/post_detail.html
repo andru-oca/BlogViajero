@@ -1,0 +1,17 @@
+{% extends "plantilla_base.html" %}
+
+{% block contenido_base %}
+
+<br>
+
+<div class="text-center">
+  <img src={{post.image.url}} class="rounded" alt="..." style="width: 600px; height: 200px;">
+</div>
+
+<h1>{{post.title}}</h1>
+<h3>{{post.subtitle}}</h3>
+<h5>{{post.content}}</h5>
+<h5>{{post.date}}</h5>
+<h5>{{post.author}}</h5>
+
+{% endblock contenido_base %}
