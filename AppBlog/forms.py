@@ -10,14 +10,14 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['last_name', 'first_name', 'username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
 
 
 class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['last_name', 'first_name', 'email']
+        fields = ['email']
 
 
 class AvatarFormulario(forms.ModelForm):

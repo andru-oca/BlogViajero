@@ -1,5 +1,3 @@
-from typing import Dict
-
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -14,9 +12,18 @@ from datetime import date
 from AppBlog.models import Post
 from AppBlog.forms import  UserRegisterForm, UserUpdateForm, AvatarFormulario, PostForm
 
+
 class BlogListView(ListView):
     model = Post
     template_name = 'home.html'
+    paginate_by = 3
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        query = self.request.GET.get('q')
+        if query:
+            return qs.filter(title__icontains=query)
+        return qs
 
 class PostDetailView(DetailView):
     model = Post
@@ -94,7 +101,7 @@ def register(request):
 
         if form.is_valid():
             form.save()
-            return render(request, "home.html", {"mensaje": "Usuario Creado :)"})
+            return render(request, "home.html", {"mensaje": "Usuario Creado Exitosamente!"})
         else:
             mensaje = 'ADVERTENCIA: Cometiste un error en el registro !!!'
 
@@ -119,12 +126,18 @@ def login_request(request):
                 login(request=request, user=user)
                 if next_url:
                     return redirect(next_url)
-                return render(request, "home.html", {"mensaje":f"Bienvenido {usuario}"})
+                welcome_msj = f"Bienvenido {usuario}"
+                posts = Post.objects.all() 
+                context = {
+                    'object_list': posts,
+                    'mensaje': welcome_msj
+                }      
+                return render(request,"home.html", context=context)
             else:
                 return render(request,"home.html", {"mensaje":"Error, datos incorrectos"})
         else:
             mensaje = "Los datos que intenta ingresar son incorrectos"
-            formulario = AuthenticationForm()  # Formulario vacio para construir el html
+            formulario = AuthenticationForm()  
             context = {
                 'form': formulario,
                 'mensaje': mensaje
@@ -132,7 +145,7 @@ def login_request(request):
             return render(request,"perfil_login.html", context=context)
 
     form = AuthenticationForm()
-    return render(request,"perfil_login.html", {'form':form} )
+    return render(request,"perfil_login.html", {'form':form})
 
 
 class CustomLogoutView(LogoutView):

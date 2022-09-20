@@ -12,7 +12,7 @@ class Post(models.Model):
     title = models.CharField(('Title'), max_length=50)
     subtitle = models.CharField(('Subtitle'), max_length=100)
     content = RichTextField(('Content of Post'), max_length=5000)
-    image = models.ImageField(upload_to='post_images', null=True, blank = True)
+    image = models.ImageField(upload_to='post_images')
     author = models.CharField(max_length=60)
     date = models.DateField()
     
