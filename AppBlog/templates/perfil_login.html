@@ -2,6 +2,10 @@
 
 {% block contenido_base %}
 
+<h3 style="background-color:#74a7e4;color:white;text-transform:uppercase;text-align:center;">
+  Login</b>
+</h3>
+
 <div style="text-align:center;padding-top: 5%">
   <form method="post">
     {% csrf_token %}
@@ -12,8 +16,8 @@
   </form>
   <br>
 
-  <span>You do not have an account? -> </span>
-  <a class="font-weight-bold" href="{% url 'register' %}">Register</a>
+  <span>... Or create a new account -> </span>
+  <a class="font-weight-bold" href="{% url 'account_register' %}">Register</a>
 
 </div>
     

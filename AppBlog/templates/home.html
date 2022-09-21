@@ -2,8 +2,10 @@
 
 {% block contenido_base %}
 
+<h3 style="background-color:#74a7e4;color:white;text-transform:uppercase;text-align:center;">
+    Posts</b>
+</h3>
 <div class="container my-3">
-    <h2 class="text-center">Posts</h2>
     <div class="row">
         {% if object_list %}
             {% for post in object_list %}
@@ -13,7 +15,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{post.title}}</h5>
                             <p class="card-text">{{post.subtitle}}</p>
-                            <a href="{% url 'detail-post' post.id %}" class="btn btn-primary">Ir al Articulo</a>
+                            <a href="{% url 'detail-post' post.id %}" class="btn btn-primary">Read more...</a>
                         </div>
                     </div>
                 </div>

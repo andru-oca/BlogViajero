@@ -16,7 +16,6 @@ class Post(models.Model):
     author = models.CharField(max_length=60)
     date = models.DateField()
     
-
     def __str__(self):
         return f'{self.titulo}, {self.subtitulo}'
 
@@ -24,7 +23,7 @@ class Avatar(models.Model):
     # Vinculo con el usuario
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     # Subcaperta avatares de media :)
-    imagen = models.ImageField(upload_to='avatares', null=True, blank = True)
+    imagen = models.ImageField(upload_to='avatares')
 
     def __str__(self):
         return f"Imagen de: {self.user}"

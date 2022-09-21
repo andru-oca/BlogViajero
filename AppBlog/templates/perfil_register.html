@@ -3,12 +3,14 @@
 {% block contenido_base %}
 
 <br></br>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">
-    Create Account
-  </button>
-</form>
+<div class="container py-5">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+      Create Account
+    </button>
+  </form>
+</div>
 
 {% endblock contenido_base %}

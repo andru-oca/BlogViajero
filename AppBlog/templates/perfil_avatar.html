@@ -2,10 +2,24 @@
 
 {% block contenido_base %}
 
-<h3>Cargar Avatar</h3>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p  }}
-    <input type="submit" value="Salvar">
-</form>
+<h3 style="background-color:#74a7e4;color:white;text-transform:uppercase;text-align:center;">
+    Avatar</b>
+</h3>
+
+<div style="text-align:center;padding-top: 5%"> 
+    {% if user.avatar.imagen.url %}
+        <div class="alert alert-primary" role="alert">
+            You already have an avatar :(
+        </div>
+    {% else %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button type="submit" class="btn btn-success btn-sm">
+                Upload Avatar!
+            </button>
+        </form>
+    {% endif %} 
+</div>
+ 
 {% endblock contenido_base %}

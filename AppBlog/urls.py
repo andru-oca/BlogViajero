@@ -12,10 +12,10 @@ urlpatterns = [
     path('edit-post/<int:pk>/', views.PostUpdateView.as_view(), name="edit-post"),
     path('delete-post/<int:pk>/', views.PostDeleteView.as_view(), name="delete-post"),
     # URLS Perfil
-    path('editar-perfil/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
-    path('agregar-avatar/', views.agregar_avatar, name="agregar_avatar"),
+    path('account/edit/', views.ProfileUpdateView.as_view(), name="account_edit"),
+    path('account/add-avatar/', views.AvatarRegisterView.as_view(), name="account_add_avatar"),
     # URLS Usuario y sesión
-    path('login/', views.login_request, name = 'login'),
-    path('register/', views.register, name = 'register'),
-    path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
+    path('account/login/', views.CustomLoginView.as_view(), name = 'account_login'),
+    path('account/register/', views.CustomRegisterView.as_view(), name = 'account_register'),
+    path('account/logout/', views.CustomLogoutView.as_view(), name = 'account_logout'),
 ]

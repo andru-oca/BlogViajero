@@ -27,11 +27,14 @@
     {% block style_block %}
     {% endblock style_block %}
   </head>
-  <body style="background-color: #ffe4ec">
+  <body style="background-color: #ffe4ec;padding-bottom:40px;">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
       <div class="container-fluid">
         {% if user.is_authenticated %}
+          {% if user.avatar.imagen.url %}
+            <img src={{ user.avatar.imagen.url }} style="width:60px;height:35px;padding-right:10px" />
+          {% endif %} 
           <div class="dropdown">
             <button class="btn btn-info dropdown-toggle btn-sm"
                     type="button"
@@ -42,19 +45,25 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
-                <a class="dropdown-item" href="{% url 'editar_perfil' %}">Editar mis datos</a>
+                <a class="dropdown-item" href="{% url 'account_edit' %}">Editar mis datos</a>
               </li>
+              {% if user.avatar.imagen.url %}
+                <li>
+                  <a class="dropdown-item disabled" href="{% url 'account_add_avatar' %}">Agregar Avatar</a>
+                </li>
+              {% else %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'account_add_avatar' %}">Agregar Avatar</a>
+                </li>
+              {% endif %}           
               <li>
-                <a class="dropdown-item" href="{% url 'agregar_avatar' %}">Agregar Avatar</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{% url 'logout' %}"><strong>Cerrar Sesión</strong></a>
+                <a class="dropdown-item" href="{% url 'account_logout' %}"><strong>Cerrar Sesión</strong></a>
               </li>
             </ul>
           </div>
         {% else %}
         <div class="d-grid gap-2">
-          <a class="btn btn-outline-info mt-auto btn-sm" href="{% url 'login' %}">Log in</a>
+          <a class="btn btn-outline-info mt-auto btn-sm" href="{% url 'account_login' %}">Log in</a>
         </div>
         {% endif %}
         <button class="navbar-toggler"
@@ -92,18 +101,19 @@
     </nav>
 
     <section> 
-    
-    {% block contenido_base %}
-    {% endblock contenido_base %}
+       
+      {% comment %} 
+      
+      Para mostrar mensajes provientes de las Views
 
-    {% if mensaje %}
-      <div style="display: flex; justify-content: center;">
-        <div class="alert alert-warning" role="alert" style="border-radius: 20px;width: fit-content;color:#FF0000;">
-          <strong>{{mensaje}}</strong>
-        </div>
-      </div>
-    {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          {{message}}
+        {% endfor %}
+      {% endif %} {% endcomment %}
 
+      {% block contenido_base %}
+      {% endblock contenido_base %}
     </section> 
 
     <div class="container" style="position: relative">
@@ -124,5 +134,6 @@
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
   </body>
 </html>

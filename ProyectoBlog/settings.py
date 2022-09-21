@@ -128,7 +128,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'AppBlog/static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'account_login'
 
 # Para imagenes
 MEDIA_URL = '/media/'
