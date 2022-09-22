@@ -15,6 +15,7 @@ class BlogListView(ListView):
     model = Post
     template_name = 'home.html'
     paginate_by = 3
+    ordering = ['id']
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
@@ -89,15 +90,16 @@ class AvatarUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'account_avatar_update.html'
     success_url = reverse_lazy('home')
 
-class CustomLoginView(LoginView):
+class CustomLoginView(SuccessMessageMixin, LoginView):
     template_name = 'account_login.html'
     next_page = reverse_lazy('home')
+    success_message = "You are successfully logged in"
 
 class CustomRegisterView(SuccessMessageMixin, CreateView):
     template_name = 'account_register.html'
     success_url = reverse_lazy('home')
     form_class = UserRegisterForm
-    # success_message = "Your profile was created successfully"
+    success_message = "Your profile was created successfully. Please login to create & edit your favourite posts!"
 
 class CustomLogoutView(LogoutView):
     template_name = 'account_logout.html'

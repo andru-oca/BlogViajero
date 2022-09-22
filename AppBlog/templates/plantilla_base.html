@@ -101,16 +101,15 @@
     </nav>
 
     <section> 
-       
-      {% comment %} 
       
-      Para mostrar mensajes provientes de las Views
-
       {% if messages %}
         {% for message in messages %}
-          {{message}}
+          <div class="alert alert-warning alert-dismissible fade show p-0" role="alert" style="line-height:20px;margin-bottom: 1px;">
+            {{message}}
+            <button type="button" class="btn-close p-1" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>       
         {% endfor %}
-      {% endif %} {% endcomment %}
+      {% endif %} 
 
       {% block contenido_base %}
       {% endblock contenido_base %}
