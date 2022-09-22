@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from datetime import date
 
-from AppBlog.models import Post
+from AppBlog.models import Avatar, Post
 from AppBlog.forms import  UserRegisterForm, UserUpdateForm, AvatarFormulario, PostForm
 
 
@@ -68,33 +68,37 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy('home')
-    template_name = 'perfil_edit.html'
+    template_name = 'account_edit.html'
 
     def get_object(self, queryset=None):
         return self.request.user
 
 
-class AvatarRegisterView(LoginRequiredMixin, CreateView):
-    template_name = 'perfil_avatar.html'
+class AvatarCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'account_avatar_create.html'
     success_url = reverse_lazy('home')
     form_class = AvatarFormulario
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(AvatarRegisterView, self).form_valid(form)
+        return super(AvatarCreateView, self).form_valid(form)
 
-# Pass Administrador: BlogViajero2022
+class AvatarUpdateView(LoginRequiredMixin, UpdateView):
+    model = Avatar
+    form_class = AvatarFormulario
+    template_name = 'account_avatar_update.html'
+    success_url = reverse_lazy('home')
 
 class CustomLoginView(LoginView):
-    template_name = 'perfil_login.html'
+    template_name = 'account_login.html'
     next_page = reverse_lazy('home')
 
 class CustomRegisterView(SuccessMessageMixin, CreateView):
-    template_name = 'perfil_register.html'
+    template_name = 'account_register.html'
     success_url = reverse_lazy('home')
     form_class = UserRegisterForm
     # success_message = "Your profile was created successfully"
 
 class CustomLogoutView(LogoutView):
-    template_name = 'perfil_logout.html'
+    template_name = 'account_logout.html'
     next_page = reverse_lazy('home')

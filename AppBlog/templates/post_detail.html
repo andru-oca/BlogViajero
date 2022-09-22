@@ -5,13 +5,19 @@
 <br>
 
 <div class="text-center">
-  <img src={{post.image.url}} class="rounded img-fluid" alt="..." style="width: 600px; height: 200px;">
+  <img src={{post.image.url}} class="rounded img-fluid" alt="..." style="width: 400px; height: 200px;">
 </div>
+<p></p>
 
-<h1 style="text-align:center;">{{post.title}}</h1>
-<h3 style="text-align:center;">{{post.subtitle}}</h3>
-<h5 style="text-align:justify;margin-right:20px;margin-left:20px;">{{post.content|safe}}</h5> 
-<cite style="color: blue; font-style: normal; text-align: right; display: block;margin-right:20px;">
+
+<u><h1 style="text-align:center;">{{post.title}}</h1></u>
+<p></p>
+<h3 style="text-align:center;color:#2d8f2f">{{post.subtitle}}</h3>
+<p></p>
+<div style="text-align:justify;margin-right:30px;margin-left:30px;">
+  {{post.content|safe}}
+</div> 
+<cite style="color: blue; font-style: normal; text-align: right; display: block;margin-right:30px;font-size:20px">
   {{post.date}}, {{post.author}}
 </cite>
 

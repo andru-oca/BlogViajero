@@ -49,11 +49,11 @@
               </li>
               {% if user.avatar.imagen.url %}
                 <li>
-                  <a class="dropdown-item disabled" href="{% url 'account_add_avatar' %}">Agregar Avatar</a>
+                  <a class="dropdown-item " href="{% url 'account_avatar_update' user.id %}">Update Avatar</a>
                 </li>
               {% else %}
                 <li>
-                  <a class="dropdown-item" href="{% url 'account_add_avatar' %}">Agregar Avatar</a>
+                  <a class="dropdown-item" href="{% url 'account_avatar_create' %}">Create Avatar</a>
                 </li>
               {% endif %}           
               <li>

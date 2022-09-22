@@ -1,12 +1,12 @@
-# Entrega intermedia del proyecto final
+# Proyecto final de Coderhouse
 
-_El proyecto es una web de Django con patrón MVT subido a Github_
+_El proyecto es un blog construido sobre Django con patrón MVT subido a Github_
 
 ## Comenzando 🚀
 
 - Para comenzar a utilizar el proyecto, se puede clonar desde la siguiente ruta, utilizando el comando _git clone_
 
-PATH: https://github.com/Lorelyn17/Entrega1-Aguilar.git
+PATH: https://github.com/Lorelyn17/BlogViajero.git
 
 Una vez clonado el repositorio, para la ejecución del proyecto se utiliza el siguiente comando desde la consola:
 
@@ -14,9 +14,7 @@ Una vez clonado el repositorio, para la ejecución del proyecto se utiliza el si
 
 ### Pre-requisitos 📋
 
-Para poder ejecutar el proyecto, es necesario una instalación de Python que posea el complemento de Django
-
-Para ésto, se puede utilizar el archivo _requeriments.txt_ que se encuentra en el repositorio
+Para poder ejecutar el proyecto, es necesario una instalación de Python que posea los complementos descriptos en el archivo _requeriments.txt_ que se encuentra en el repositorio
 
 El comando necesario para realizar la instalación a partir del archivo arriba nombrado es:
 
@@ -24,9 +22,17 @@ El comando necesario para realizar la instalación a partir del archivo arriba n
 
 ## Ejecutando las pruebas ⚙️
 
+Superusuario:
+
+**admin** -> Pass: admin2022
+
+Usuarios dados de Alta:
+
+**Lorelyn17** -> Pass: BlogViajero2022!
+
 Una vez ejecutado el programa con el comando descripto más arriba (Ver _Comenzando_), se procede a abrir la página dando Ctrl+Click en el IP generado por el comando ejecutado en la consola
 
-Esto nos llevará a la pantalla de _INICIO_ de la página, desde la cual se puede acceder a los menúes de _AUTOS_, _AVIONES_ y _BARCOS_
+Esto nos llevará a la pantalla de _HOME_ de la página, desde la cual se puede acceder a los menúes de _HOME_, _POST MANAGEMENT_ y _ABOUT_
 
 Desde allí, al ingresar a cada una de las opciones, es posible visualizar (tanto para Auto, Barco y Avión):
 
