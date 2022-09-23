@@ -4,9 +4,9 @@ _El proyecto es un blog construido sobre Django con patrón MVT subido a Github_
 
 ## Comenzando 🚀
 
-- Para comenzar a utilizar el proyecto, se puede clonar desde la siguiente ruta, utilizando el comando _git clone_
+- Para comenzar a utilizar el proyecto, se puede clonar desde la siguiente ruta, utilizando el comando:
 
-PATH: https://github.com/Lorelyn17/BlogViajero.git
+**git clone https://github.com/Lorelyn17/BlogViajero.git**
 
 Una vez clonado el repositorio, para la ejecución del proyecto se utiliza el siguiente comando desde la consola:
 
@@ -29,6 +29,7 @@ Superusuario:
 Usuarios dados de Alta:
 
 **Lorelyn17** -> Pass: BlogViajero2022!
+**lihue** -> Pass: python314
 
 Una vez ejecutado el programa con el comando descripto más arriba (Ver _Comenzando_), se procede a abrir la página dando Ctrl+Click en el IP generado por el comando ejecutado en la consola
 
@@ -62,11 +63,11 @@ Es posible analizar el resultado de las pruebas de 2 formas
 ## Autores ✒️
 
 
-* **Lorena Aguilar** - *Armado de la solución, páginas de autos y readme.md* - [lorelyn17](https://github.com/Lorelyn17)
-* **Leonardo Cardozo** - *Páginas de Aviones* - [laion-uy](https://github.com/laion-uy)
-* **Lihue Gutierrez Barcena** - *Páginas de Barcos* - [lihuebarcena](https://github.com/lihuebarcena)
+* **Lorena Aguilar** - [lorelyn17](https://github.com/Lorelyn17)
+* **Leonardo Cardozo** - [laion-uy](https://github.com/laion-uy)
+* **Lihue Gutierrez Barcena** - [lihuebarcena](https://github.com/lihuebarcena)
 
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/Lorelyn17/Entrega1-Aguilar/graphs/contributors) quíenes han participado en este proyecto. 
+También puedes mirar la lista de todos los [contribuyentes](https://github.com/Lorelyn17/BlogViajero/graphs/contributors) quíenes han participado en este proyecto. 
 
 ---
 ⌨️ con ❤️ por [lorelyn17](https://github.com/Lorelyn17) 😊
