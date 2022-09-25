@@ -32,18 +32,21 @@ class Post(models.Model):
             pass  # when new photo then we do nothing, normal case
         super().save(*args, **kwargs)
 
-class Avatar(models.Model):
+class Profile(models.Model):
     # Vinculo con el usuario
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     # Subcaperta avatares de media :)
-    imagen = models.ImageField(upload_to='avatares')
+    image = models.ImageField(upload_to='avatares')
+    name = models.CharField(('Name'), max_length=30)
+    webpage_link = models.URLField(('Webpage Link'), max_length=300)
+    description = models.CharField(('Description'), max_length=100)
 
     def __str__(self):
         return f"Imagen de: {self.user}"
 
     def save(self, *args, **kwargs):
         try:
-            this = Avatar.objects.get(id=self.id)
+            this = Profile.objects.get(id=self.id)
             if this.imagen != self.imagen:
                 this.imagen.delete(save=False)
         except:

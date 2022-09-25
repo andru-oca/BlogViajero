@@ -2,7 +2,7 @@ from dataclasses import fields
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from AppBlog.models import Avatar, Post
+from AppBlog.models import Profile, Post
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -28,11 +28,11 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['email']
 
 
-class AvatarFormulario(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
 
     class Meta:
-        model = Avatar
-        fields = ['imagen']
+        model = Profile
+        fields = ['image', 'name', 'webpage_link', 'description']
 
 class PostForm(forms.ModelForm):
 

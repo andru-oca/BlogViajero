@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from datetime import date
 
-from AppBlog.models import Avatar, Post
-from AppBlog.forms import  UserRegisterForm, UserUpdateForm, AvatarFormulario, PostForm
+from AppBlog.models import Profile, Post
+from AppBlog.forms import  UserRegisterForm, UserUpdateForm, ProfileForm, PostForm
 
 
 class BlogListView(ListView):
@@ -56,16 +56,31 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'post_create.html'
     success_url = reverse_lazy('posts')
 
-
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('posts')
 
 
-# Views de ususarios, registro, login o logout
+class ProfileCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'profile_create.html'
+    success_url = reverse_lazy('home')
+    form_class = ProfileForm
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ProfileCreateView, self).form_valid(form)
+
+# Views de Profile
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'profile_create.html'
+    success_url = reverse_lazy('home')
+
+# Views de account
+
+class AccountUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy('home')
@@ -73,22 +88,6 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
-
-class AvatarCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'account_avatar_create.html'
-    success_url = reverse_lazy('home')
-    form_class = AvatarFormulario
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(AvatarCreateView, self).form_valid(form)
-
-class AvatarUpdateView(LoginRequiredMixin, UpdateView):
-    model = Avatar
-    form_class = AvatarFormulario
-    template_name = 'account_avatar_update.html'
-    success_url = reverse_lazy('home')
 
 class CustomLoginView(SuccessMessageMixin, LoginView):
     template_name = 'account_login.html'

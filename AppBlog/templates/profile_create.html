@@ -3,7 +3,7 @@
 {% block contenido_base %}
 
 <h3 style="background-color:#74a7e4;color:white;text-transform:uppercase;text-align:center;">
-    Edit your Avatar</b>
+    Create your profile</b>
 </h3>
 
 <div style="text-align:center;padding-top: 5%"> 
@@ -11,9 +11,13 @@
         {% csrf_token %}
         {{ form.as_p}}
         <button type="submit" class="btn btn-success btn-sm">
-            Update your Avatar!
+            {% if object %}
+                Save changes
+            {% else %}
+                Create
+            {% endif %}
         </button>
-    </form> 
+    </form>
 </div>
  
 {% endblock contenido_base %}

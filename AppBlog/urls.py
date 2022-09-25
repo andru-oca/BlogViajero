@@ -11,12 +11,12 @@ urlpatterns = [
     path('create-post/', views.PostCreateView.as_view(), name="create-post"),
     path('edit-post/<int:pk>/', views.PostUpdateView.as_view(), name="edit-post"),
     path('delete-post/<int:pk>/', views.PostDeleteView.as_view(), name="delete-post"),
+    # URLS Profile   
+    path('account/profile-create/', views.ProfileCreateView.as_view(), name="profile_create"),
+    path('account/profile-update/<int:pk>/', views.ProfileUpdateView.as_view(), name="profile_update"),
     # URLS Account
-    path('account/edit/', views.ProfileUpdateView.as_view(), name="account_edit"),
-    path('account/avatar-create/', views.AvatarCreateView.as_view(), name="account_avatar_create"),
-    path('account/avatar-update/<int:pk>/', views.AvatarUpdateView.as_view(), name="account_avatar_update"),
-    # URLS Login & Logout
     path('account/login/', views.CustomLoginView.as_view(), name = 'account_login'),
     path('account/register/', views.CustomRegisterView.as_view(), name = 'account_register'),
+    path('account/edit/', views.AccountUpdateView.as_view(), name="account_edit"),
     path('account/logout/', views.CustomLogoutView.as_view(), name = 'account_logout'),
 ]

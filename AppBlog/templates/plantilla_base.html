@@ -32,8 +32,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
       <div class="container-fluid">
         {% if user.is_authenticated %}
-          {% if user.avatar.imagen.url %}
-            <img src={{ user.avatar.imagen.url }} style="width:60px;height:35px;padding-right:10px" />
+          {% if user.profile.image.url %}
+            <img src={{ user.profile.image.url }} style="width:60px;height:35px;padding-right:10px" />
           {% endif %} 
           <div class="dropdown">
             <button class="btn btn-info dropdown-toggle btn-sm"
@@ -45,19 +45,19 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
-                <a class="dropdown-item" href="{% url 'account_edit' %}">Editar mis datos</a>
+                <a class="dropdown-item" href="{% url 'account_edit' %}">Update Email</a>
               </li>
-              {% if user.avatar.imagen.url %}
+              {% if user.profile.image.url %}
                 <li>
-                  <a class="dropdown-item " href="{% url 'account_avatar_update' user.id %}">Update Avatar</a>
+                  <a class="dropdown-item " href="{% url 'profile_update' user.profile.id %}">Update Profile</a>
                 </li>
               {% else %}
                 <li>
-                  <a class="dropdown-item" href="{% url 'account_avatar_create' %}">Create Avatar</a>
+                  <a class="dropdown-item" href="{% url 'profile_create' %}">Create Profile</a>
                 </li>
-              {% endif %}           
+              {% endif %}            
               <li>
-                <a class="dropdown-item" href="{% url 'account_logout' %}"><strong>Cerrar Sesión</strong></a>
+                <a class="dropdown-item" href="{% url 'account_logout' %}"><strong>Logout</strong></a>
               </li>
             </ul>
           </div>
